@@ -26,11 +26,20 @@ def main():
     matrix2_input = st.sidebar.text_area("Enter Matrix 2 (comma-separated values):")
     scalar = st.sidebar.number_input("Enter Scalar Value:")
 
+    if not matrix1_input.strip() or not matrix2_input.strip():
+        st.sidebar.warning("Please enter values for both matrices.")
+        return
+
     try:
         # Convert input text to numpy arrays
         matrix1 = np.array([list(map(int, row.split(','))) for row in matrix1_input.split('\n') if row.strip()])
         matrix2 = np.array([list(map(int, row.split(','))) for row in matrix2_input.split('\n') if row.strip()])
 
+        # Validate non-empty and rectangular matrices
+        if matrix1.ndim != 2 or matrix2.ndim != 2:
+            st.sidebar.error("Both matrices must be 2D arrays.")
+            return
+        
         # Validate matrix dimensions for addition and subtraction
         if matrix1.shape != matrix2.shape:
             st.sidebar.error("Matrix 1 and Matrix 2 must have the same dimensions for addition and subtraction.")
@@ -81,8 +90,11 @@ def main():
 
             st.subheader("Transpose of Matrix 2:")
             st.table(result_transpose_for_2)
+
     except ValueError:
         st.sidebar.error("Please ensure all matrix values are integers and properly formatted.")
+    except IndexError:
+        st.sidebar.error("Invalid matrix input. Ensure matrices have correct rows and columns.")
 
-if __name__ == "__main__"
- main()
+if __name__ == "__main__":
+    main()
