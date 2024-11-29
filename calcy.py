@@ -84,5 +84,5 @@ def main():
     except ValueError:
         st.sidebar.error("Please ensure all matrix values are integers and properly formatted.")
 
-if __name__ == "__main__":
-    main()
+if __name__ == "__main__"
+ main()
